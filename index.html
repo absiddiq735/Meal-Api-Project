@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Search App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container my-4">
+        <h1 class="text-center mb-4">Meal Search App</h1>
+
+        <!-- Search Bar -->
+        <div class="input-group mb-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search for meals...">
+            <button class="btn btn-primary" id="searchButton">Search</button>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="row">
+            <!-- Meal Cards Column -->
+            <div class="col-md-8">
+                <h3 class="mb-3">Available Meals</h3>
+                <div class="row" id="mealsContainer"></div>
+            </div>
+
+            <!-- Selected Group Column (Cart Design) -->
+            <div class="col-md-4">
+                <h3 class="mb-3">Selected Meals (<span id="mealCount">0</span>/7)</h3>
+                <div class="cart-container" id="selectedMeals"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meal Details Modal -->
+    <div class="modal fade" id="mealModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
