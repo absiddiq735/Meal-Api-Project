@@ -41,21 +41,42 @@ const displayMeals = (meals) => {
     meals.slice(0, 8).forEach((meal) => {
         const mealCard = document.createElement("div");
         mealCard.className = "col-md-6 mb-4";
+        
+        // Escape quotes in meal details
+        const mealName = meal.strMeal.replace(/'/g, "\\'");
+        const mealCategory = meal.strCategory ? meal.strCategory.replace(/'/g, "\\'") : "Unknown";
+        const mealArea = meal.strArea ? meal.strArea.replace(/'/g, "\\'") : "Unknown";
+        const mealInstructions = meal.strInstructions ? meal.strInstructions.replace(/'/g, "\\'").slice(0, 150) : "No instructions available.";
+
         mealCard.innerHTML = `
             <div class="card">
                 <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
                 <div class="card-body">
                     <h5 class="card-title">${meal.strMeal}</h5>
-                    <p><strong>Category:</strong> ${meal.strCategory}</p>
+                    <p><strong>Category:</strong> ${meal.strCategory || "Unknown"}</p>
                     <p>${meal.strInstructions.slice(0, 15)}...</p>
-                    <button class="btn btn-success" onclick="addToGroup('${meal.strMeal}', '${meal.strMealThumb}')">Add to Group</button>
-                    <button class="btn btn-info" onclick="showDetails('${meal.strMeal}', '${meal.strCategory}', '${meal.strArea}', '${meal.strInstructions}')">Details</button>
+                    <button class="btn btn-success" onclick="addToGroup('${mealName}', '${meal.strMealThumb}')">Add to Group</button>
+                    <button class="btn btn-info details-btn" data-name="${mealName}" data-category="${mealCategory}" data-area="${mealArea}" data-instructions="${mealInstructions}">Details</button>
                 </div>
             </div>
         `;
+
         container.appendChild(mealCard);
     });
+
+    // Attach event listeners to all "Details" buttons
+    document.querySelectorAll(".details-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            showDetails(
+                this.getAttribute("data-name"),
+                this.getAttribute("data-category"),
+                this.getAttribute("data-area"),
+                this.getAttribute("data-instructions")
+            );
+        });
+    });
 };
+
 
 
 let selectedMeals = [];
@@ -98,6 +119,9 @@ const showDetails = (name, category, area, instructions) => {
         <p><strong>Area:</strong> ${area}</p>
         <p><strong>Instructions:</strong> ${instructions}</p>
     `;
-    const modal = new bootstrap.Modal(document.getElementById("mealModal"));
+
+    // Initialize and show Bootstrap modal
+    const modalElement = document.getElementById("mealModal");
+    const modal = new bootstrap.Modal(modalElement);
     modal.show();
 };
